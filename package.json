@@ -1,6 +1,6 @@
 {
   "name": "react-gradient-animation",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A highly customizable, animated gradient background component for React applications.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
