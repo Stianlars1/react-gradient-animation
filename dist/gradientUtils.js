@@ -1,4 +1,4 @@
-var validBlendingModes = [
+const validBlendingModes = [
     "source-over",
     "source-in",
     "source-out",
@@ -26,24 +26,20 @@ var validBlendingModes = [
     "color",
     "luminosity",
 ];
-export var isValidBlendingMode = function (mode) {
+export const isValidBlendingMode = (mode) => {
     return validBlendingModes.includes(mode);
 };
-export var debounce = function (func, wait) {
-    var timeout;
-    return function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-            args[_i] = arguments[_i];
-        }
+export const debounce = (func, wait) => {
+    let timeout;
+    return (...args) => {
         clearTimeout(timeout);
-        timeout = setTimeout(function () { return func.apply(void 0, args); }, wait);
+        timeout = setTimeout(() => func(...args), wait);
     };
 };
-export var hexToRgb = function (hex) {
-    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-    hex = hex.replace(shorthandRegex, function (_, r, g, b) { return r + r + g + g + b + b; });
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+export const hexToRgb = (hex) => {
+    const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, (_, r, g, b) => r + r + g + g + b + b);
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     if (result) {
         return {
             r: parseInt(result[1], 16),
@@ -55,7 +51,7 @@ export var hexToRgb = function (hex) {
         throw new Error("Invalid hex color format");
     }
 };
-export var getRandom = function (min, max) {
+export const getRandom = (min, max) => {
     return Math.random() * (max - min) + min;
 };
-export var getRandomDirection = function () { return (Math.random() > 0.5 ? 1 : -1); };
+export const getRandomDirection = () => (Math.random() > 0.5 ? 1 : -1);

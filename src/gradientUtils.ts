@@ -37,7 +37,7 @@ export const isValidBlendingMode = (
 };
 
 export const debounce = (func: (...args: any[]) => void, wait: number) => {
-    let timeout: NodeJS.Timeout;
+    let timeout: number;
     return (...args: any[]) => {
         clearTimeout(timeout);
         timeout = setTimeout(() => func(...args), wait);

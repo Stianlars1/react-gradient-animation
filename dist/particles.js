@@ -1,11 +1,11 @@
 import { getRandom, getRandomDirection, isValidBlendingMode, } from "./gradientUtils";
-var Particle = /** @class */ (function () {
-    function Particle(color, shape, options, opacity) {
+export class Particle {
+    constructor(color, shape, options, opacity) {
         this.color = color;
         this.shape = shape;
         this.options = options;
-        this.rgba = "rgba(".concat(this.color.r, ", ").concat(this.color.g, ", ").concat(this.color.b, ", ").concat(opacity.center, ")");
-        this.rgbaEdge = "rgba(".concat(this.color.r, ", ").concat(this.color.g, ", ").concat(this.color.b, ", ").concat(opacity.edge, ")");
+        this.rgba = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${opacity.center})`;
+        this.rgbaEdge = `rgba(${this.color.r}, ${this.color.g}, ${this.color.b}, ${opacity.edge})`;
         this.size = Math.abs(getRandom(options.size.min, options.size.max));
         this.direction = getRandomDirection();
         this.vx =
@@ -16,7 +16,7 @@ var Particle = /** @class */ (function () {
         this.y = getRandom(0, options.c.h);
         this.pulseDirection = 1;
     }
-    Particle.prototype.update = function (canvasWidth, canvasHeight) {
+    update(canvasWidth, canvasHeight) {
         if (this.options.size.pulse !== 0) {
             this.size += this.options.size.pulse * this.pulseDirection;
             if (this.size > this.options.size.max ||
@@ -34,16 +34,16 @@ var Particle = /** @class */ (function () {
             this.vy *= -1;
             this.y = Math.max(0, Math.min(this.y, canvasHeight));
         }
-    };
-    Particle.prototype.draw = function (ctx, blending) {
+    }
+    draw(ctx, blending) {
         ctx.beginPath();
-        var validBlending = isValidBlendingMode(blending)
+        const validBlending = isValidBlendingMode(blending)
             ? blending
             : "source-over";
         if (validBlending !== "source-over") {
             ctx.globalCompositeOperation = validBlending;
         }
-        var gradient = ctx.createRadialGradient(this.x, this.y, 0.01, this.x, this.y, this.size / 2);
+        const gradient = ctx.createRadialGradient(this.x, this.y, 0.01, this.x, this.y, this.size / 2);
         gradient.addColorStop(0, this.rgba);
         gradient.addColorStop(1, this.rgbaEdge);
         ctx.fillStyle = gradient;
@@ -55,7 +55,7 @@ var Particle = /** @class */ (function () {
                 ctx.rect(this.x - this.size / 2, this.y - this.size / 2, this.size, this.size);
                 break;
             case "t":
-                var height = (Math.sqrt(3) / 2) * this.size;
+                const height = (Math.sqrt(3) / 2) * this.size;
                 ctx.moveTo(this.x, this.y - (2 / 3) * height);
                 ctx.lineTo(this.x - this.size / 2, this.y + height / 3);
                 ctx.lineTo(this.x + this.size / 2, this.y + height / 3);
@@ -66,7 +66,5 @@ var Particle = /** @class */ (function () {
         ctx.closePath();
         ctx.fill();
         ctx.globalCompositeOperation = "source-over";
-    };
-    return Particle;
-}());
-export { Particle };
+    }
+}
